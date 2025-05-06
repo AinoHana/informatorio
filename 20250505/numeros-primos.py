@@ -2,7 +2,7 @@
 #Establecemos una lista vacía para almacenar los números primos
 numeros_primos = []
 
-#establece el rango de números a comprobar (1 a 1000) y el bucle lo reccorre
+#establece el rango de números a comprobar (1 a 1000) y el bucle lo recorre
 for numero in range(1, 1001):
     if numero <= 1:
         es_primo = False #1 no es primo
