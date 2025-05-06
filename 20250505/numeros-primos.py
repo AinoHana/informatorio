@@ -2,7 +2,7 @@
 #Establecemos una lista vacía para almacenar los números primos
 numeros_primos = []
 
-#establece el rango de números a comprobar (1 a 1000) y el bucle lo recorre
+#Establece el rango de números a comprobar (1 a 1000) y el bucle lo recorre
 for numero in range(1, 1001):
     if numero <= 1:
         es_primo = False #1 no es primo
@@ -19,7 +19,6 @@ for numero in range(1, 1001):
     if es_primo:
         numeros_primos.append(numero)
 
-print("Los números primos entre 1 y 1000 son:")
-print(numeros_primos)
 # El código encuentra todos los números primos entre 1 y 1000 y los imprime en una lista llamada numeros_primos.
-  
+print("Los números primos entre 1 y 1000 son:")
+print(numeros_primos) 
