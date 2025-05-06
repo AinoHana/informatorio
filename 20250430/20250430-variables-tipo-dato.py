@@ -65,4 +65,4 @@ tupla = ('Gerardo', 'Andres', 'Ainara', 3, 1)
 print(tupla)
 
 diccionario = {'42039192': 'Pablo Perez', '42039193': 'Pablo Pereson'}
-print(diccionario['42039192'])
+
