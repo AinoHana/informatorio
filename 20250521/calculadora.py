@@ -1,7 +1,6 @@
 import tkinter as tk
 
 def calcular():
-
     expresion = entrada.get()
     caracteres_permitidos = "0123456789+-*/. "
     
