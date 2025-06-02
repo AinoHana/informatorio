@@ -6,7 +6,10 @@ import os
 import datetime  #Necesario para cumpleaños y alarma
 
 #Constantes Globales
-ARCHIVO_CONTACTOS = "contactos_proyecto.csv" #Archivo para guardar/cargar contactos
+ARCHIVO_CONTACTOS = {
+    "Juan": {"telefono": "123456789", "email": "juan@example.com", "cumpleanos": "15/05"},
+    "Ana": {"telefono": "987654321", "email": "ana@example.com", "cumpleanos": "20/08"},
+} #Archivo para guardar/cargar contactos
 NOMBRES_CAMPOS = ['nombre', 'telefono', 'mail', 'cumpleanos'] #Encabezados/datos de los contactos
 MENSAJE_CUMPLEANOS_PREDEFINIDO = "¡Feliz cumpleaños! Te deseo un día lleno de alegría y sorpresas." #Mensaje de cumpleaños por defecto, editar si quieren
 
@@ -116,30 +119,25 @@ class GestorContactosApp:
 
     #Manejo de Archivos (Carga y Guardado de Contactos), agregar el código para manejar archivos CSV
     def cargar_contactos(self):
-        """
-        Esqueleto: Carga contactos desde el archivo.
-        Hay que implementar la lógica de carga de contactos desde ARCHIVO_CONTACTOS.
-        Por ahora, usa una lista de contactos de ejemplo para que la búsqueda funcione.
-        """
-        self.contactos = [ #Datos de ejemplo para que la búsqueda funcione mínimamente
-            {'nombre': 'Ana Lucero', 'telefono': '11223344', 'mail': 'ana@gmail.com', 'cumpleanos': '05/01'},
-            {'nombre': 'Juan Pérez', 'telefono': '55667788', 'mail': 'juan@gmail.com', 'cumpleanos': '15/06'},
-            {'nombre': 'Pablo López', 'telefono': '99001122', 'mail': 'pablo@gmail.com', 'cumpleanos': '10/06'},
-            {'nombre': 'Teresa Gómez', 'telefono': '99001122', 'mail': 'teresa@gmail.com', 'cumpleanos': '25/11'}
-        ]
-        #Acá va la lógica para leer del ARCHIVO_CONTACTOS (no está creado)
-        #En estos momentos, solamente se usa la lista de contactos de ejemplo
-        print("Función 'cargar_contactos' ejecutada (con datos de ejemplo).")
+       
+        self.contactos = []  # Vacía la lista actual
+
+        for nombre, datos in ARCHIVO_CONTACTOS.items():
+            contacto = {
+            "nombre": nombre,
+            "telefono": datos.get("telefono", ""),
+            "mail": datos.get("email", ""),  # Ten en cuenta que en self.contactos se llama "mail"
+            "cumpleanos": datos.get("cumpleanos", "")
+            }
+            self.contactos.append(contacto)
+
+    print("Contactos cargados desde ARCHIVO_CONTACTOS.")
+     
 
     #Acá va la lógica para guardar los contactos en el archivo ARCHIVO_CONTACTOS
     def guardar_contactos(self):
-        """
-        Esqueleto: Guarda contactos en el archivo.
-        Hay que implementar la lógica de guardado de contactos en ARCHIVO_CONTACTOS.
-        Por ahora, no hace nada.
-        """
-        print("Función 'guardar_contactos' ejecutada. (Implementar la lógica de guardar)")
         pass
+
 
 
     #Funciones de Interfaz Gráfica (Mostrar y Limpiar)
@@ -198,14 +196,28 @@ class GestorContactosApp:
 
     #Lógica de Crear, Editar y Eliminar Contactos, no implementada aún
     def al_crear_contacto(self):
-        """
-        Esqueleto: Manejador para el botón 'Crear Contacto'.
-        Hay que implementar la lógica de creación de un nuevo contacto.
-        Por ahora, muestra un mensaje de acción pendiente.
-        """
-        messagebox.showinfo("Acción Pendiente", "Función 'Crear Contacto' debe ser implementada")
-        print("Función 'al_crear_contacto' ejecutada. (Implementar la lógica de creación)")
-        pass
+        nombre = self.var_nombre.get()
+        telefono = self.var_telefono.get()
+        email = self.var_mail.get()
+        cumpleanos = self.var_cumpleanos.get()
+    
+        if not nombre or not telefono or not email:
+            messagebox.showwarning("Campos vacíos", "Por favor, completa todos los campos.")
+            return
+
+    # Guardar en el diccionario
+        ARCHIVO_CONTACTOS[nombre] = {
+            "telefono": telefono,
+            "email": email,
+            "cumpleanos": cumpleanos
+            }
+
+        messagebox.showinfo("Éxito", f"Contacto '{nombre}' guardado correctamente.")
+        print(f"Contacto '{nombre}' creado con éxito.")
+        self.limpiar_campos() #Limpia los campos después de crear el contacto
+        print(ARCHIVO_CONTACTOS) #Imprime el diccionario de contactos para verificar)
+        self.cargar_contactos() #Recarga los contactos para actualizar la Listbox
+        self.actualizar_mostrar_contactos() #Actualiza la Listbox con los nuevos contactos
 
     #Función para editar un contacto, no implementada aún
     def al_editar_contacto(self):
